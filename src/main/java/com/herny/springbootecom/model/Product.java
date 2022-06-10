@@ -4,6 +4,7 @@ import com.herny.springbootecom.constant.ProductCategory;
 
 import java.util.Date;
 
+
 public class Product {
 
     private Integer productId;
