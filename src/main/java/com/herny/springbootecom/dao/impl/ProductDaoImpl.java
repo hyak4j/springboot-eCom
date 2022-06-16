@@ -26,13 +26,27 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory category, String search) {
         //查詢所有商品
+        /*
+            WHERE 1=1 => 不會對查詢結果有任何影響 ,
+            目的為讓下面查詢條件可自由添加  直接拼接 AND語法 (多組條件拼接時很有感)
+         */
         String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, " +
-                "created_date, last_modified_date " +
-                "FROM product";
-
+                     "created_date, last_modified_date " +
+                     "FROM product WHERE 1=1";  //
         Map<String, Object> map = new HashMap<>();
+
+        if (category != null){
+            sql = sql + " AND category = :category";
+            map.put("category", category.name());   // Enum 轉 String
+        }
+
+        // 模糊查詢
+        if (search != null){
+            sql = sql + " AND product_name LIKE :search";
+            map.put("search", "%" + search + "%");
+        }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 

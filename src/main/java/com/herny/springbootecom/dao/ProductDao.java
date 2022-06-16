@@ -1,5 +1,6 @@
 package com.herny.springbootecom.dao;
 
+import com.herny.springbootecom.constant.ProductCategory;
 import com.herny.springbootecom.dto.ProductRequest;
 import com.herny.springbootecom.model.Product;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 
     Product getProductById(Integer productId);
 
