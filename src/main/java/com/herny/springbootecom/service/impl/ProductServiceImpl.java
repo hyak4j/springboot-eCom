@@ -1,7 +1,7 @@
 package com.herny.springbootecom.service.impl;
 
-import com.herny.springbootecom.constant.ProductCategory;
 import com.herny.springbootecom.dao.ProductDao;
+import com.herny.springbootecom.dao.ProductQueryParams;
 import com.herny.springbootecom.dto.ProductRequest;
 import com.herny.springbootecom.model.Product;
 import com.herny.springbootecom.service.ProductService;
@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override

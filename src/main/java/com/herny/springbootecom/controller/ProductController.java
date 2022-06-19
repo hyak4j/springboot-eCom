@@ -1,6 +1,7 @@
 package com.herny.springbootecom.controller;
 
 import com.herny.springbootecom.constant.ProductCategory;
+import com.herny.springbootecom.dao.ProductQueryParams;
 import com.herny.springbootecom.dto.ProductRequest;
 import com.herny.springbootecom.model.Product;
 import com.herny.springbootecom.service.ProductService;
@@ -24,9 +25,13 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ){
+        // 未來新增查詢條件於 ProductQueryParams
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
 
         // 查詢商品列表
-        List<Product> productList = productService.getProducts(category, search);
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

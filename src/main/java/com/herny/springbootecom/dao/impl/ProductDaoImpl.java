@@ -2,6 +2,7 @@ package com.herny.springbootecom.dao.impl;
 
 import com.herny.springbootecom.constant.ProductCategory;
 import com.herny.springbootecom.dao.ProductDao;
+import com.herny.springbootecom.dao.ProductQueryParams;
 import com.herny.springbootecom.dto.ProductRequest;
 import com.herny.springbootecom.model.Product;
 import com.herny.springbootecom.rowmapper.ProductRowMapper;
@@ -26,7 +27,7 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
         //查詢所有商品
         /*
             WHERE 1=1 => 不會對查詢結果有任何影響 ,
@@ -37,15 +38,15 @@ public class ProductDaoImpl implements ProductDao {
                      "FROM product WHERE 1=1";  //
         Map<String, Object> map = new HashMap<>();
 
-        if (category != null){
+        if (productQueryParams.getCategory() != null){
             sql = sql + " AND category = :category";
-            map.put("category", category.name());   // Enum 轉 String
+            map.put("category", productQueryParams.getCategory().name());   // Enum 轉 String
         }
 
         // 模糊查詢
-        if (search != null){
+        if (productQueryParams.getSearch() != null){
             sql = sql + " AND product_name LIKE :search";
-            map.put("search", "%" + search + "%");
+            map.put("search", "%" + productQueryParams.getSearch() + "%");
         }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
