@@ -1,11 +1,19 @@
 package com.herny.springbootecom.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 //-- 儲存DB資料
 public class User {
     private Integer userId;
+
+    @JsonProperty("e_mail")
     private String email;
+
+    // @JsonIgnore=> 忽略此變數， 避免回傳前端
+    @JsonIgnore
     private String password;
     private Date createdDate;
     private Date lastModifiedDate;
