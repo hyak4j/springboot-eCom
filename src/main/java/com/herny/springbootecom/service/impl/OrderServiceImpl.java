@@ -4,6 +4,7 @@ import com.herny.springbootecom.dao.OrderDao;
 import com.herny.springbootecom.dao.ProductDao;
 import com.herny.springbootecom.dto.BuyItem;
 import com.herny.springbootecom.dto.CreateOrderRequest;
+import com.herny.springbootecom.model.Order;
 import com.herny.springbootecom.model.OrderItem;
 import com.herny.springbootecom.model.Product;
 import com.herny.springbootecom.service.OrderService;
@@ -22,6 +23,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Override
+    public Order getOrderById(Integer orderId){
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(orderId);
+
+        //合併數據 orderItemList => order
+        order.setOrderItemList(orderItemList);
+
+        return order;
+    }
 
     // 萬一執行過程出現Exception  Transactional可還原資料庫變更
     // (兩資料庫同時發生，或同時不發生; 避免數據不一致)
