@@ -1,6 +1,5 @@
 package com.herny.springbootecom.dao;
 
-import com.herny.springbootecom.constant.ProductCategory;
 import com.herny.springbootecom.dto.ProductRequest;
 import com.herny.springbootecom.model.Product;
 
@@ -15,6 +14,8 @@ public interface ProductDao {
     Integer createProduct(ProductRequest productRequest);
 
     void updateProduct(Integer productId, ProductRequest productRequest);
+
+    void updateStock(Integer productId, Integer stock);
 
     void deleteProductById(Integer productId);
 
